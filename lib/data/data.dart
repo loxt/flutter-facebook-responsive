@@ -1,4 +1,6 @@
-import 'package:flutter_facebook_responsive_ui/models/models.dart';
+import 'package:flutter_facebook_responsive_ui/models/post_model.dart';
+import 'package:flutter_facebook_responsive_ui/models/story_model.dart';
+import 'package:flutter_facebook_responsive_ui/models/user_model.dart';
 
 final User currentUser = User(
   name: 'Marcus Ng',
