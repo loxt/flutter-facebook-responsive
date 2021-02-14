@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_responsive_ui/config/palette.dart';
 import 'package:flutter_facebook_responsive_ui/models/user_model.dart';
 import 'package:flutter_facebook_responsive_ui/widgets/profile-avatar.dart';
+import 'package:flutter_facebook_responsive_ui/widgets/responsive.dart';
 
 class Rooms extends StatelessWidget {
   final List<User> onlineUsers;
@@ -13,28 +14,36 @@ class Rooms extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 60.0,
-      color: Colors.white,
-      child: ListView.builder(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
-        scrollDirection: Axis.horizontal,
-        itemCount: 1 + onlineUsers.length,
-        itemBuilder: (BuildContext context, int index) {
-          if (index == 0) {
+    final bool isDesktop = Responsive.isDesktop(context);
+    return Card(
+      margin: EdgeInsets.symmetric(horizontal: isDesktop ? 5 : 0),
+      elevation: isDesktop ? 1 : 0,
+      shape: isDesktop
+          ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
+          : null,
+      child: Container(
+        height: 60.0,
+        color: Colors.white,
+        child: ListView.builder(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+          scrollDirection: Axis.horizontal,
+          itemCount: 1 + onlineUsers.length,
+          itemBuilder: (BuildContext context, int index) {
+            if (index == 0) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: _CreateRoomButton(),
+              );
+            }
+            final User user = onlineUsers[index - 1];
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: _CreateRoomButton(),
-            );
-          }
-          final User user = onlineUsers[index - 1];
-          return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: ProfileAvatar(
-                imageUrl: user.imageUrl,
-                isActive: true,
-              ));
-        },
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: ProfileAvatar(
+                  imageUrl: user.imageUrl,
+                  isActive: true,
+                ));
+          },
+        ),
       ),
     );
   }
