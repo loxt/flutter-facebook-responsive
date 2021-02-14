@@ -5,6 +5,7 @@ import 'package:flutter_facebook_responsive_ui/models/post_model.dart';
 import 'package:flutter_facebook_responsive_ui/widgets/circle.button.dart';
 import 'package:flutter_facebook_responsive_ui/widgets/create-post-container.dart';
 import 'package:flutter_facebook_responsive_ui/widgets/post-container.dart';
+import 'package:flutter_facebook_responsive_ui/widgets/responsive.dart';
 import 'package:flutter_facebook_responsive_ui/widgets/rooms.dart';
 import 'package:flutter_facebook_responsive_ui/widgets/stories.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -12,8 +13,21 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: CustomScrollView(
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+          body: Responsive(
+        mobile: _HomeScreenMobile(),
+        desktop: _HomeScreenDesktop(),
+      )),
+    );
+  }
+}
+
+class _HomeScreenMobile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(
       slivers: [
         SliverAppBar(
           brightness: Brightness.light,
@@ -65,6 +79,13 @@ class HomeScreen extends StatelessWidget {
           return PostContainer(post: post);
         }, childCount: posts.length))
       ],
-    ));
+    );
+  }
+}
+
+class _HomeScreenDesktop extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_responsive_ui/data/data.dart';
 import 'package:flutter_facebook_responsive_ui/screens/home.screen.dart';
+import 'package:flutter_facebook_responsive_ui/widgets/custom-app-bar.dart';
 import 'package:flutter_facebook_responsive_ui/widgets/custom-tab-bar.dart';
+import 'package:flutter_facebook_responsive_ui/widgets/responsive.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class NavScreen extends StatefulWidget {
@@ -31,17 +34,31 @@ class _NavScreenState extends State<NavScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
     return DefaultTabController(
         length: _icons.length,
         child: Scaffold(
+          appBar: Responsive.isDesktop(context)
+              ? PreferredSize(
+                  preferredSize: Size(screenSize.width, 100),
+                  child: CustomAppBar(
+                    currentUser: currentUser,
+                    icons: _icons,
+                    selectedIndex: _selectedIndex,
+                    onTap: (index) => setState(() => _selectedIndex = index),
+                  ),
+                )
+              : null,
           body: IndexedStack(index: _selectedIndex, children: _screens),
-          bottomNavigationBar: Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: CustomTabBar(
-                icons: _icons,
-                selectedIndex: _selectedIndex,
-                onTap: (index) => setState(() => _selectedIndex = index)),
-          ),
+          bottomNavigationBar: !Responsive.isDesktop(context)
+              ? Container(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: CustomTabBar(
+                      icons: _icons,
+                      selectedIndex: _selectedIndex,
+                      onTap: (index) => setState(() => _selectedIndex = index)),
+                )
+              : const SizedBox.shrink(),
         ));
   }
 }

@@ -46,11 +46,12 @@ class _CreateRoomButton extends StatelessWidget {
     return OutlinedButton(
         child: Row(
           children: [
-            ShaderMask(
-              shaderCallback: (rect) =>
-                  Palette.createRoomGradient.createShader(rect),
-              child: Icon(Icons.video_call, size: 35, color: Colors.white),
-            ),
+            // ShaderMask(
+            //   shaderCallback: (rect) =>
+            //       Palette.createRoomGradient.createShader(rect),
+            //   child: Icon(Icons.video_call, size: 35, color: Colors.white),
+            // ),
+            Icon(Icons.video_call, size: 35, color: Colors.purple),
             const SizedBox(width: 4),
             Text('Create\nRoom'),
           ],
